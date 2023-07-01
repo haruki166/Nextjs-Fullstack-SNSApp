@@ -56,7 +56,7 @@ router.post('/login',async(req,res)=>{
 
     //JWTを使ってトークンを発行する処理（今回はuserのidを暗号化している）
     const token = jwt.sign({id:user.id},process.env.SECRET_KEY,{
-        expiresIn:"1d"
+        expiresIn:"1d" //保存期間1日
     });
 
     return res.json({token});
