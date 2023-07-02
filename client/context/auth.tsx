@@ -1,4 +1,5 @@
-import React, { ReactNode, useContext } from "react";
+import apiClient from "@/lib/apiClient";
+import React, { ReactNode, useContext, useEffect } from "react";
 
 interface AuthContextType {
   login: (token: string) => void;
@@ -19,8 +20,16 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  //取得したキーをAPIのheaderにつける（こっちはクライアントの処理のためuseEffect可能）
+  useEffect(() => {
+    //ローカルストレージに保存したトークンのキーを取得する
+    const token = localStorage.getItem("auth_token");
+    apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
+  }, []);
+
   const login = async (token: string) => {
     localStorage.setItem("auth_token", token);
+    apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
   };
 
   const logout = () => {
