@@ -1,6 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const env = require("dotenv");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 env.config();
@@ -11,7 +9,7 @@ const router = require("express").Router();
 const prisma = new PrismaClient();
 
 //つぶやき投稿用API
-router.post("/post",isAuthenticated, async (req, res) => {
+router.post("/post", isAuthenticated, async (req, res) => {
   //クライアントからのbodyを分割代入
   const { content } = req.body;
 
@@ -29,7 +27,11 @@ router.post("/post",isAuthenticated, async (req, res) => {
       },
       //includeオプションを使用して、作成された投稿に関連する作者（User）の情報を含めるように指定
       include: {
-        author: true,
+        author: {
+          include: {
+            profile: true,
+          },
+        },
       },
     });
 
@@ -48,7 +50,13 @@ router.get("/get_latest_post", async (req, res) => {
       take: 10,
       orderBy: { createdAt: "desc" },
       //author: trueを指定することで、各投稿に関連する作者（User）の情報を取得します。
-      include: { author: true },
+      include: {
+        author: {
+          include: {
+            profile: true,
+          },
+        },
+      },
     });
     return res.json(latestPosts);
   } catch (error) {
