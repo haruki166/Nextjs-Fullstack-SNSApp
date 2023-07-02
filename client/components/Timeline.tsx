@@ -23,7 +23,7 @@ const Timeline = () => {
 
       setPostText("");
     } catch (error) {
-      alert("ログインしてください");
+      alert("ログインしてください。または文字を入力してください。");
     }
   };
 
