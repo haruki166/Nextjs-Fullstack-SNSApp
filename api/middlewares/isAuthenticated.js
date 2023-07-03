@@ -5,6 +5,7 @@ function isAuthenticated(req, res, next) {
   //apiClient.defaults.headers["Authorization"] = `Bearer ${token}`の${token}の部分を取得している
   const token = req.headers.authorization?.split(" ")[1];
 
+  // console.log(token);
   //トークンがなかったらエラー
   if (!token) {
     return res.status(401).json({ message: "権限がありません" });

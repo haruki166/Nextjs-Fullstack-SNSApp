@@ -72,12 +72,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = () => {
+    // console.log('logout 実施');
+    
     //ローカルストレージのtokenキーの値を削除
     localStorage.removeItem("auth_token");
 
     //APIクライアントのデフォルトのヘッダーに追加したAuthorizationヘッダーを削除するための処理
-    delete apiClient.defaults.headers["Authorication"];
+    delete apiClient.defaults.headers["Authorization"];
     setUser(null);
+    
   };
 
   const value = {
