@@ -4,7 +4,7 @@ import { useAuth } from "@/context/auth";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  console.log(user);
+  // console.log(user);
 
   return (
     <header className="bg-gray-700 p-4 text-white">
