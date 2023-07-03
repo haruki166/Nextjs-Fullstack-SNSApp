@@ -6,7 +6,7 @@ const usersRoute = require("./routes/users");
 const cors = require("cors");
 
 //ポート番号設定
-const PORT = 5050;
+const PORT = process.env.PORT || 5050;
 
 //jsonを受け取れるようにミドルウェア設定
 app.use(express.json());
